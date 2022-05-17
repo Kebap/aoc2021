@@ -1,7 +1,5 @@
 # https://adventofcode.com/2021/day/4
 
-# from dataclasses import dataclass
-# @dataclass
 class Board:
   def __init__(self, values: str):
     """
@@ -133,21 +131,29 @@ def main():
   data = data[2:] # Remove called numbers and first empty line
 
   boards = setup_boards(data)
-  called_numbers = called_numbers.split(",") 
+  #print("Erstes Brett:\n", boards[0])
+  #print("Letztes Brett:\n", boards[-1])
   
+  called_numbers = called_numbers.split(",") 
+  remaining_boards = len(boards)
   for number in called_numbers:
     print(f"Gezogen wurde Nummer {number}.", end=" \t")
     for i, board in enumerate(boards):
+      if board is None:
+        continue
       board.mark(int(number))
       if board.test_bingo():
-        boards.remove(board)
         last_board = board
+        position = boards.index(board)
+        boards[position] = None
+        remaining_boards -= 1
     print(f"Noch {len(boards)} Bretter warten auf Bingo!")
-    if len(boards) == 0:
+    if remaining_boards == 0:
       print(f"Das letzte Brett erhält {last_board.score(int(number))} Punkte. Glückwunsch!")
-      print(f"So sieht das Brett aus:\n{last_board}")
-      print(f"Diese Zahlen sind markiert:\n{last_board.marked}")
-      print(f"Diese Zahlen sind im Grid:\n{last_board.grid}")
+      #print(f"So sieht das Brett aus:\n{last_board}")
+      #print("So sind die Zahlen markiert:\n",
+      #      list(zip(last_board.grid, 
+      #               last_board.marked)))
       break
 
 
