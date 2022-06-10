@@ -60,7 +60,7 @@ def main():
     if debug_time:
       end_time = process_time_ns()
       duration = end_time - start_time
-      print(f"Day {day:>2} calculated in {duration//1000:>5} ms.")
+      print(f"Day {day:>2} calculated in {duration//1000:>5} microseconds.")
 
   result = len(data)
   print(f"Number of fish after {days} days: {result}.")
