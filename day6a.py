@@ -1,9 +1,10 @@
 # https://adventofcode.com/2021/day/6
 
+from time import process_time_ns
 
 # class Fish():
 #   def __init__(self, days_left = 8: int):
-#     self.days_left = days_left
+# self.days_left = days_left
 
 
 def calculate_new_day(fishes: list) -> list:
@@ -41,16 +42,26 @@ def sanitize_data_of_today(data_from_file: list) -> list:
 def main():
   data = get_data()
   days = 80
-  debug = True
-  
-  if debug: 
+  debug_contents = False
+  debug_time = True
+
+  if debug_contents: 
     print(f"Initial state: {fish_str(data)}")
-    
+
   for day in range(1, days + 1):
+    if debug_time: 
+      start_time = process_time_ns()
+
     data = calculate_new_day(data)
-    if debug:
+
+    if debug_contents:
       print(f"After {day:>2} days: {fish_str(data)}")
-      
+
+    if debug_time:
+      end_time = process_time_ns()
+      duration = end_time - start_time
+      print(f"Day {day:>2} calculated in {duration//1000:>5} ms.")
+
   result = len(data)
   print(f"Number of fish after {days} days: {result}.")
 
